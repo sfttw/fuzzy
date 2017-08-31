@@ -16,15 +16,17 @@ def url_exists(location):
 	request = urllib.request.Request(location)
 	request.add_header('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.6; rv:5.0)')
 	request.get_method = lambda : 'HEAD'
-	ctx = ssl.create_default_context()
+	ctx = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
 	ctx.check_hostname = False
 	ctx.verify_mode = ssl.CERT_NONE
 	try:
 		response = urllib.request.urlopen(request, timeout=5, context=ctx)
 		return True
-	except:
-		if args['verbose']: print('[-] '+location)
-		return False
+	except Exception as ex:
+		if '404' in str(ex):
+			if args['verbose']: print('[-] '+location)
+			return False
+		else:print(ex)
 
 
 def main(domain='example.com'):
