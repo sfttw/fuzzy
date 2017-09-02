@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-'''HTTP Web fuzzer: checks for http://example.com/whatever '''
+'''HTTP Web fuzzer: checks for http://example.com/<x>  '''
 import urllib.request
 import argparse 
 import ssl  
@@ -90,7 +90,7 @@ if __name__ == '__main__':
 	while True:
 		if finished == threadcount:			
 			successful.sort()
-			print('done!')
+			print('Scan complete.')
 			for success in successful: 
 				print('\x1b[6;30;42m [+] ' + success + '\x1b[0m')
 			if args['output']:
